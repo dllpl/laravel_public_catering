@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\AuthAndRegister\AuthController;
+use App\Http\Controllers\Api\v1\AuthAndRegister\RegisterController;
+use App\Http\Controllers\Api\v1\Managment\CatalogController;
+use App\Http\Controllers\Api\v1\Managment\DishController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['prefix' => 'v1'], function () {
+
+    Route::middleware(['guest', 'throttle:60'])->group(function () {
+        Route::post('login', [AuthController::class, 'login'])->name('login');
+        Route::post('register', [RegisterController::class, 'register'])->name('register');
+    });
+
+    Route::middleware(['auth:sanctum', 'throttle:60'])->group(function () {
+
+        Route::resources([
+            'catalogs' => CatalogController::class,
+            'dishes' => DishController::class
+        ]);
+
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    });
 });
+
