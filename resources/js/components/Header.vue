@@ -9,7 +9,7 @@
                         <span>email</span>
                     </a>
                     <ul class="dropdown-menu text-small" style="">
-                        <li><a class="dropdown-item" href="#">Выйти</a></li>
+                        <li><a class="dropdown-item" @click="logout">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,7 +18,12 @@
 
 <script>
 export default {
-    name: "Header"
+    name: "Header",
+    methods: {
+        logout() {
+
+        }
+    }
 }
 </script>
 
