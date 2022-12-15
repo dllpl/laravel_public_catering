@@ -69,7 +69,7 @@ export default {
                 password_confirmation: this.password_confirmation
             }).then(({data}) => {
                 VueCookies.set('_token', data.data.access_token, data.data.expires_in * 60)
-                this.$router.push({name: 'Главная'})
+                this.$router.push({name: 'Блюда'})
             }).catch(err => {
                 this.error_msg = err.response.data.message
                 this.error = true
