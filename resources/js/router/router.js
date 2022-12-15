@@ -6,6 +6,7 @@ import Login from "../views/Login.vue"
 import Dishes from "../views/Managment/Dishes.vue";
 import Categories from "../views/Managment/Categories.vue";
 import VueCookies from "vue-cookies";
+import TotalCost from "../views/Reports/TotalCost.vue";
 
 const routes = [
     {
@@ -26,7 +27,7 @@ const routes = [
                             },
                             {
                                 name: 'Блюда',
-                                path: '/dishes'
+                                path: '/dashboard/dishes'
                             },
 
                         ]
@@ -42,11 +43,31 @@ const routes = [
                         return [
                             {
                                 name: 'Главная',
-                                path: '/'
+                                path: '/dashboard'
                             },
                             {
                                 name: 'Категории',
-                                path: '/category'
+                                path: '/dashboard/categories'
+                            },
+
+                        ]
+                    },
+                },
+            },
+            {
+                path: "totalCost",
+                name: "Стоимость блюд",
+                component: TotalCost,
+                meta: {
+                    breadCrumb() {
+                        return [
+                            {
+                                name: 'Главная',
+                                path: '/dashboard'
+                            },
+                            {
+                                name: 'Стоимость блюд',
+                                path: '/dashboard/totalCost'
                             },
 
                         ]
@@ -55,6 +76,14 @@ const routes = [
             }
         ],
         meta: {
+            breadCrumb() {
+                return [
+                    {
+                        name: 'Главная',
+                        path: '/dashboard'
+                    },
+                ]
+            },
             isAuth: true,
         }
     },
@@ -67,14 +96,6 @@ const routes = [
         }
     },
     {
-        path: "/",
-        name: "Login",
-        component: Login,
-        meta: {
-            guest: true,
-        }
-    },
-    {
         path: "/login",
         name: "Login",
         component: Login,
@@ -82,6 +103,13 @@ const routes = [
             guest: true,
         }
     },
+    {
+        path: '/',
+        component: Login,
+        meta: {
+            guest: true,
+        }
+    }
 ]
 
 const router = createRouter({
@@ -96,7 +124,6 @@ router.beforeEach(async (to, from, next) => {
     const requiredAuth = to.matched.some(record => record.meta.isAuth)
     const requiredGuest = to.matched.some(record => record.meta.guest)
 
-    console.log(isAuth, requiredAuth, requiredGuest)
     if (requiredAuth && !isAuth) {
         next('/login')
     } else if (requiredGuest && isAuth) { //если юзер уже в системе и пытается получить доступ до роутов гостя

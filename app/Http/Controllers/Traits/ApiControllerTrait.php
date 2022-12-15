@@ -24,10 +24,10 @@ trait ApiControllerTrait
     }
 
     /**
-     * @param array $data
+     * @param $data
      * @return JsonResponse
      */
-    public function apiResponseSuccess(array $data = []): JsonResponse
+    public function apiResponseSuccess($data): JsonResponse
     {
         return response()->json([
             'success' => true,

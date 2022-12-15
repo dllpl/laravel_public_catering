@@ -19,7 +19,13 @@ class DishController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->apiResponseSuccess([Dish::all()]);
+        $dishes = Dish::with('category')->orderBy('created_at', 'desc')->get();
+
+        if ($dishes->isNotEmpty()) {
+            return $this->apiResponseSuccess($dishes);
+        } else {
+            return $this->apiResponseSuccess();
+        }
     }
 
     /**
@@ -34,17 +40,17 @@ class DishController extends Controller
             'name' => 'required|string',
             'price' => 'required|integer',
             'count' => 'required|integer',
-            'category_id' => 'required|integer|exists:categories'
+            'category_id' => 'required|integer|exists:categories,id'
         ]);
 
-        return $this->apiResponseSuccess([
+        return $this->apiResponseSuccess(
             Dish::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'count' => $request->coutn,
+                'count' => $request->count,
                 'category_id' => $request->category_id
             ])
-        ]);
+        );
     }
 
     /**
@@ -57,7 +63,7 @@ class DishController extends Controller
     {
         $request->validate(['id' => 'required|integer|exists:dishes']);
 
-        return $this->apiResponseSuccess([Dish::find($request->id)]);
+        return $this->apiResponseSuccess(Dish::with('category')->find($request->id));
 
     }
 
@@ -74,13 +80,13 @@ class DishController extends Controller
             'name' => 'nullable|string',
             'price' => 'nullable|integer',
             'count' => 'nullable|integer',
-            'category_id' => 'nullable|integer|exists:categories'
+            'category_id' => 'nullable|integer|exists:categories,id'
         ]);
 
         $dish = Dish::find($request->id);
 
         if ($request->name) {
-            $dish->name = $request->dish;
+            $dish->name = $request->name;
         }
         if ($request->price) {
             $dish->price = $request->price;
@@ -93,9 +99,9 @@ class DishController extends Controller
         }
         $dish->save();
 
-        return $this->apiResponseSuccess([
-            Dish::where('id', $request->id)
-        ]);
+        return $this->apiResponseSuccess(
+            Dish::where('id', $request->id)->first()
+        );
     }
 
     /**
@@ -108,8 +114,8 @@ class DishController extends Controller
     {
         $request->validate(['id' => 'required|integer|exists:dishes']);
 
-        return $this->apiResponseSuccess([
+        return $this->apiResponseSuccess(
             Dish::destroy($request->id)
-        ]);
+        );
     }
 }

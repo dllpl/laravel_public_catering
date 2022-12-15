@@ -1,9 +1,9 @@
 <template>
-    <div class="shadow p-3 mb-3 rounded">
+    <div class="shadow p-3 mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" v-for="item in breadCrumbs">
-                    <router-link :to="item.path">{{ item.name }}</router-link>
+                    <router-link :to="item.path" class="text-secondary text-decoration-none">{{ item.name }}</router-link>
                 </li>
             </ol>
         </nav>

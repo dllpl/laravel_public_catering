@@ -25,4 +25,9 @@ class Dish extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

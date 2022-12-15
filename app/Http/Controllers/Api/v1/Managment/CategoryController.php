@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->apiResponseSuccess([Category::all()]);
+        return $this->apiResponseSuccess(Category::with('dishes')->orderBy('created_at','desc')->get());
     }
 
     /**
@@ -48,7 +48,7 @@ class CategoryController extends Controller
     {
         $request->validate(['id' => 'required|integer|exists:categories']);
 
-        return $this->apiResponseSuccess([Category::find($request->id)]);
+        return $this->apiResponseSuccess(Category::find($request->id));
 
     }
 
@@ -65,10 +65,10 @@ class CategoryController extends Controller
             'name' => 'required|string|unique:categories'
         ]);
 
-        return $this->apiResponseSuccess([
+        return $this->apiResponseSuccess(
             Category::where('id', $request->id)
-                ->update(['name' => $request->name])->first()
-        ]);
+                ->update(['name' => $request->name])
+        );
     }
 
     /**
@@ -79,8 +79,8 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request): JsonResponse
     {
-        $request->validate(['id' => 'required|integer|exists:categories']);
-        Category::destroy($request->id);
-        return $this->apiResponseSuccess();
+        $request->validate(['id' => 'required|integer|exists:categories,id']);
+
+        return $this->apiResponseSuccess(Category::destroy($request->id));
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="vh-100 shadow p-3 rounded">
+    <div class="vh-100 shadow p-3">
         <ul class="list-unstyled ps-0">
             <li class="mb-1 fs-5">
                 <button class="btn btn-toggle align-items-center rounded fs-4" data-bs-toggle="collapse"
@@ -8,8 +8,28 @@
                 </button>
                 <div class="collapse show" id="home-collapse" style="">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><router-link to="/dashboard/dishes" class="link-dark rounded">Блюда</router-link></li>
-                        <li><router-link to="/dashboard/categories" class="link-dark rounded">Категории</router-link></li>
+                        <li>
+                            <router-link to="/dashboard/dishes" class="link-dark rounded">Блюда</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/dashboard/categories" class="link-dark rounded">Категории</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled ps-0">
+            <li class="mb-1 fs-5">
+                <button class="btn btn-toggle align-items-center rounded fs-4" data-bs-toggle="collapse"
+                        data-bs-target="#second-collapse" aria-expanded="true">
+                    Отчеты
+                </button>
+                <div class="collapse show" id="second-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <router-link to="/dashboard/totalCost" class="link-dark rounded">Стоимость блюд</router-link>
+                        </li>
                     </ul>
                 </div>
             </li>

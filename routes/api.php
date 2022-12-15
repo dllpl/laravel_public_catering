@@ -4,7 +4,9 @@ use App\Http\Controllers\Api\v1\AuthAndRegister\AuthController;
 use App\Http\Controllers\Api\v1\AuthAndRegister\RegisterController;
 use App\Http\Controllers\Api\v1\Managment\CategoryController;
 use App\Http\Controllers\Api\v1\Managment\DishController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::middleware(['auth:sanctum', 'throttle:60'])->group(function () {
 
+        Route::get('user', [UserController::class, 'index'])->name('user.index');
+
         Route::group(['prefix'=>'category'], function () {
             Route::get('all', [CategoryController::class, 'index'])->name('category.all');
             Route::post('show', [CategoryController::class, 'show'])->name('category.show');
@@ -43,6 +47,9 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('delete', [DishController::class, 'destroy'])->name('dish.delete');
         });
 
+        Route::group(['prefix'=>'report'], function () {
+            Route::get('totalCost', [ReportController::class, 'totalCost'])->name('report.totalCost');
+        });
 
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });

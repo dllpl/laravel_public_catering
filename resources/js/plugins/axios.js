@@ -1,18 +1,16 @@
 import axios from "axios";
 import VueCookies from "vue-cookies"
 
-const interceptor = axios.create({})
-
-interceptor.interceptors.request.use((config) => {
+axios.interceptors.request.use((config) => {
     const token = VueCookies.get('_token')
     if (!token) {
         return config
     }
-    config.headers.common["Authorization"] = `Bearer ${token}`
+    config.headers["Authorization"] = `Bearer ${token}`
     return config
 })
 
-interceptor.interceptors.response.use(
+axios.interceptors.response.use(
     (response) => {
         return response
     },
@@ -27,4 +25,4 @@ interceptor.interceptors.response.use(
     }
 )
 
-export default interceptor
+export default axios
