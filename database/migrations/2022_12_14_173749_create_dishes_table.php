@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('category_id');
             $table->double('price');
-            $table->integer('count')->nullable();
+            $table->integer('count');
             $table->timestamps();
         });
     }

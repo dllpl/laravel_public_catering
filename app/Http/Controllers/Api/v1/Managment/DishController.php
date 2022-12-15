@@ -3,83 +3,113 @@
 namespace App\Http\Controllers\Api\v1\Managment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\ApiControllerTrait;
+use App\Models\Dish;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DishController extends Controller
 {
+    use ApiControllerTrait;
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->apiResponseSuccess([Dish::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|integer',
+            'count' => 'required|integer',
+            'category_id' => 'required|integer|exists:categories'
+        ]);
+
+        return $this->apiResponseSuccess([
+            Dish::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'count' => $request->coutn,
+                'category_id' => $request->category_id
+            ])
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Request $request): JsonResponse
     {
-        //
-    }
+        $request->validate(['id' => 'required|integer|exists:dishes']);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->apiResponseSuccess([Dish::find($request->id)]);
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'id' => 'required|integer|exists:dishes',
+            'name' => 'nullable|string',
+            'price' => 'nullable|integer',
+            'count' => 'nullable|integer',
+            'category_id' => 'nullable|integer|exists:categories'
+        ]);
+
+        $dish = Dish::find($request->id);
+
+        if ($request->name) {
+            $dish->name = $request->dish;
+        }
+        if ($request->price) {
+            $dish->price = $request->price;
+        }
+        if ($request->count) {
+            $dish->count = $request->count;
+        }
+        if ($request->category_id) {
+            $dish->category_id = $request->category_id;
+        }
+        $dish->save();
+
+        return $this->apiResponseSuccess([
+            Dish::where('id', $request->id)
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request): JsonResponse
     {
-        //
+        $request->validate(['id' => 'required|integer|exists:dishes']);
+
+        return $this->apiResponseSuccess([
+            Dish::destroy($request->id)
+        ]);
     }
 }

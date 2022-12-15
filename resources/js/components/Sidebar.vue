@@ -8,8 +8,8 @@
                 </button>
                 <div class="collapse show" id="home-collapse" style="">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><router-link to="/dishes" class="link-dark rounded">Блюда</router-link></li>
-                        <li><router-link to="/categories" class="link-dark rounded">Категории</router-link></li>
+                        <li><router-link to="/dashboard/dishes" class="link-dark rounded">Блюда</router-link></li>
+                        <li><router-link to="/dashboard/categories" class="link-dark rounded">Категории</router-link></li>
                     </ul>
                 </div>
             </li>

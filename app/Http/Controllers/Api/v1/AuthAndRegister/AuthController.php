@@ -20,22 +20,20 @@ class AuthController extends Controller
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'email' => 'required|email|exist:users',
-            'password' => 'required|string'
+            'email' => 'required|email|exists:users',
+            'password' => 'required'
         ]);
 
-        $user = User::where('email', $request->email)
-            ->where('password', Hash::make($request->password))->first();
+        $user = User::where('email', $request->email)->first();
 
-        if ($user) {
-            $token = $user->createToken()->planeTextToken;
-
+        if (Hash::check($request->password, $user->password)) {
+            $token = $user->createToken('token')->plainTextToken;
             return $this->apiResponseSuccess([
                 'access_token' => $token,
                 'expires_in' => config('sanctum.expiration')
             ]);
         } else {
-            return $this->apiResponseError('Проверьте правильность ввода пароля');
+            return $this->apiResponseError('Проверьте правильность ввода пароля', 404);
         }
     }
 

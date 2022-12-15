@@ -19,7 +19,7 @@ trait ApiControllerTrait
     {
         return response()->json([
             'success' => false,
-            'data' => $message,
+            'message' => $message,
         ], $status);
     }
 
