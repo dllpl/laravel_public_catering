@@ -1,4 +1,11 @@
 <template>
+    <header class="p-3 mb-3" style="background-color: #304156">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <router-link to="/" class="text-decoration-none text-light">Складской учет</router-link>
+            </ul>
+        </div>
+    </header>
     <div class="w-25 m-auto mt-5">
         <h2 class="text-center mb-5">Регистрация</h2>
         <form @submit.prevent="register">

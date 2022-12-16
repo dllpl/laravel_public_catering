@@ -1,5 +1,5 @@
 <template>
-    <div class="vh-100 shadow p-3">
+    <div class="shadow p-3">
         <ul class="list-unstyled ps-0">
             <li class="mb-1 fs-5">
                 <button class="btn btn-toggle align-items-center rounded fs-4" data-bs-toggle="collapse"
