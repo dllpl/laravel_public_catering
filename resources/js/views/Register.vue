@@ -6,38 +6,42 @@
             </ul>
         </div>
     </header>
-    <div class="w-25 m-auto mt-5">
-        <h2 class="text-center mb-5">Регистрация</h2>
-        <form @submit.prevent="register">
-            <div class="mb-3 row">
-                <label for="exampleInputEmail1" class="col-sm-3 col-form-label text-end">Email</label>
-                <div class="col-sm-9">
-                    <input type="email" class="form-control" aria-describedby="emailHelp" id="exampleInputEmail1"
-                           v-model="email" required>
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-sm-9 col-md-6 col-lg-6 col-xl-5 col-10">
+            <h2 class="text-center mb-5">Регистрация</h2>
+            <form @submit.prevent="register">
+                <div class="mb-3 row">
+                    <label for="exampleInputEmail1" class="col-sm-3 col-4 col-form-label text-end">Email</label>
+                    <div class="col-sm-9 col-8">
+                        <input type="email" class="form-control" aria-describedby="emailHelp" id="exampleInputEmail1"
+                               v-model="email" required>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="exampleInputPassword1" class="col-sm-3 col-form-label text-end">Пароль</label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" id="exampleInputPassword1" v-model="password" required>
+                <div class="mb-3 row">
+                    <label for="exampleInputPassword1" class="col-sm-3 col-4 col-form-label text-end">Пароль</label>
+                    <div class="col-sm-9 col-8">
+                        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password"
+                               required>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="exampleInputPassword1" class="col-sm-3 col-form-label text-end">Повторите пароль</label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" id="exampleInputPassword1" v-model="password_confirmation" required>
-                    <div class="row mt-3 align-items-center">
-                        <div class="col-sm-4">
-                            <button type="submit" class="btn btn-primary">Регистрация</button>
-                        </div>
-                        <div class="col-sm-8">
-                            <router-link to="/login" class="text-decoration-none">Вход</router-link>
+                <div class="mb-3 row">
+                    <label for="exampleInputPassword1" class="col-sm-3 col-4 col-form-label text-end">Повторите пароль</label>
+                    <div class="col-sm-9 col-8">
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                               v-model="password_confirmation" required>
+                        <div class="row mt-3 align-items-center">
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-primary">Регистрация</button>
+                            </div>
+                            <div class="col-sm-9">
+                                <router-link to="/login" class="text-decoration-none">Вход</router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="text-danger" v-if="error">{{ error_msg }}</div>
-        </form>
+                <div class="text-danger" v-if="error">{{ error_msg }}</div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -51,7 +55,7 @@ export default {
         return {
             email: '',
             password: '',
-            password_confirmation:'',
+            password_confirmation: '',
 
             error: false,
             error_msg: ''

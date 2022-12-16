@@ -13,7 +13,6 @@
 
 
 <h2>Как развернуть проект?</h2>
-<small>Степ-by-степ</small>
 <ol>
     <li>
         git clone https://github.com/dllpl/laravel_public_catering.git
